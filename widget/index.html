@@ -1,0 +1,157 @@
+<html>
+    <head>
+        <style type="text/css">
+            body {
+                margin: 0;
+                width: 220px;
+                height: 37px;
+                background-image: url(background.png);
+                background-repeat: no-repeat;
+            }
+            .text {
+                position: absolute;
+                margin-top: 12px;
+                margin-left: 16px;
+                height: 12px;
+                width: 126px;
+                font-family: Verdana, Arial, Helvetica, sans-serif;
+                font-size: 12px;
+                color:#FFFFFF;
+                text-align:center;
+            }
+            .button1 {
+                position: absolute;
+                margin-top: 6px;
+                margin-left: 158px;
+                height: 25px;
+                width: 25px;
+                cursor: hand;
+                cursor: pointer;
+                background-image: url(button1.png);
+                background-repeat: no-repeat;
+            }
+            .button2 {
+                position: absolute;
+                margin-top: 6px;
+                margin-left: 189px;
+                height: 25px;
+                width: 25px;
+                cursor: hand;
+                cursor: pointer;
+                background-image: url(button2.png);
+                background-repeat: no-repeat;
+            }
+        </style>
+
+
+        <script language="JavaScript" type="text/javascript">
+            function start() {
+                System.Gadget.background = "background.png";
+                showTime();
+            }
+
+            function showTime () {
+                var now = new Date();
+                var dayW = now.getDay();
+                var dayM = now.getDate();
+                var month = now.getMonth();
+                var hours = now.getHours();
+                var minutes = now.getMinutes();
+                var seconds = now.getSeconds();
+
+                var timeValue = "";
+                switch (dayW) {
+                    case 0: timeValue += "Sun"; break;
+                    case 1: timeValue += "Mon"; break;
+                    case 2: timeValue += "Tue"; break;
+                    case 3: timeValue += "Wed"; break;
+                    case 4: timeValue += "Thu"; break;
+                    case 5: timeValue += "Fri"; break;
+                    case 6: timeValue += "Sat"; break;
+                }
+                timeValue += " " + dayM;
+                timeValue += ".";
+                timeValue += month < 9 ? "0" : "";
+                timeValue += (month + 1) + " ";
+                timeValue += hours;
+                timeValue += ((minutes < 10) ? ":0" : ":") + minutes;
+                timeValue += ((seconds < 10) ? ":0" : ":") + seconds;
+                clock.innerHTML = timeValue;
+                timerID = setTimeout("showTime()", 1000);
+                timerRunning = true;
+            }
+
+            function writeText(txt) {
+                document.getElementById(txt).style.visibility = "visible";
+            }
+
+            function clearText(txt) {
+                document.getElementById(txt).style.visibility = "hidden";
+            }
+
+            var stoperStartTime = 0;
+
+            function startStoper() {
+                stoperStartTime = new Date().getTime();
+                showStoper();
+            }
+
+            function showStoper() {
+                var current = new Date(new Date().getTime() - stoperStartTime);
+
+                var values = new Array(current.getHours(),
+                                       current.getMinutes(),
+                                       current.getSeconds(),
+                                       current.getMilliseconds());
+
+                var just = false;
+                var stoperValue = "";
+
+                if (values[0] > 0) {
+                    stoperValue += values[0] + ":";
+                    just = true;
+                }
+
+                if (values[1] > 0) {
+                    if (just && values[1] < 10) {
+                        stoperValue += "0";
+                    }
+                    stoperValue += values[1] + ":";
+                    just = true;
+                }
+
+                if (values[2] > 0 || just) {
+                    if (just && values[2] < 10) {
+                        stoperValue += "0";
+                    }
+                    stoperValue += values[2] + ".";
+                } else {
+                    stoperValue += "0.";
+                }
+
+                stoperValue += Math.floor(values[3]/100);
+                stoper.innerHTML = stoperValue;
+
+                setTimeout("showStoper()", 100);
+            }
+
+            function button1exe() {
+                location = "button1.lnk";
+            }
+
+            function button2exe() {
+                location = "button2.lnk";
+            }
+            
+        </script>
+    </head>
+
+    <body onLoad="start();">
+        <div class="button1"; onClick="button1exe();"></div>
+        <div class="button2"; onClick="button2exe();"></div>
+        <div onClick="writeText('stoper'); clearText('clock'); startStoper()"
+            id="clock" class="text" style="visibility: visible"></div>
+        <div onClick="clearText('stoper'); writeText('clock');"
+            id="stoper" class="text" style="visibility: hidden">Stoper</div>
+    </body>
+</html>

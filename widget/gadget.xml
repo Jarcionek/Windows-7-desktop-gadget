@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<gadget>
+    <name>Clock + Stopwatch</name>
+    <namespace></namespace>
+    <version>1.0</version>
+    <author name="Jaroslaw Pawlak"></author>
+    <copyright>2011</copyright>
+    <description>Clock with onClick stopwatch + 2 buttons</description>
+    	<icons>
+		<icon src="preview.png" />
+	</icons>
+    <hosts>
+        <host name="sidebar">
+            <base type="HTML" apiVersion="1.0.0" src="index.html" />
+            <permissions>full</permissions>
+            <platform minPlatformVersion="0.3" />
+        </host>
+    </hosts>
+</gadget>
